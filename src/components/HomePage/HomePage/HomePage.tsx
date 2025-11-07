@@ -321,7 +321,7 @@ export function HomePage() {
               <div className="spinner-blade"></div>
               <div className="spinner-blade"></div>
             </div>
-          ) : data === null ? (
+          ) : data === null || data === undefined || data.length === 0 ? (
             <p className="no-task-text">
               You have no tasks yet! Click the <strong>"New Task"</strong>{" "}
               button above to add your first task.

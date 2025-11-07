@@ -236,9 +236,9 @@ body::-webkit-scrollbar {
 .task-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  height:fit-content;
+  height: fit-content;
   gap: 10px;
   padding: 10px 30px;
 }
@@ -246,6 +246,8 @@ body::-webkit-scrollbar {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   font-weight: 500;
+  grid-column: 1 / -1;
+  text-align: center;
   margin-top: 30px;
   color: #969697b7;
   text-align: center;
