@@ -9,6 +9,7 @@ import { PasswordResetPage } from "./components/PasswordResetPage/PasswordResetP
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState, type JSX } from "react";
 import { auth } from "./config/FirebaseConfig";
+import { Reauthenticate } from "./components/Reauthenticate/Reauthenticate";
 
 const ProtectedRoute = ({
   user,
@@ -59,6 +60,14 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reauthenticate"
+          element={
+            <ProtectedRoute user={user}>
+              <Reauthenticate />
             </ProtectedRoute>
           }
         />

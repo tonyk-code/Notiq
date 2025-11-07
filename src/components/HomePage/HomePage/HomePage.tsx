@@ -349,7 +349,6 @@ export function HomePage() {
 
         {deleteConfirmation && (
           <DeleteAccountDialog
-            displayErrorMessage={displayErrorMessage}
             setDeleteConfirmation={setDeleteConfirmation}
           />
         )}
