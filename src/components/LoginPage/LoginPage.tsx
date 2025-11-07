@@ -190,7 +190,7 @@ export function LoginPage() {
               </label>
             </div>
 
-            <Link to="/forgot-password">
+            <Link to="/password-reset">
               <button type="button" className="forgot-password-link">
                 Forgot password?
               </button>
