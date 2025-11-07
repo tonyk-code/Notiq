@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import "./DeleteAccountDialog.css";
 
 export function DeleteAccountDialog({
@@ -27,7 +28,9 @@ export function DeleteAccountDialog({
             >
               Cancel
             </button>
-            <button className="delete-btn">"Delete Account"</button>
+            <Link to="/reauthenticate" className="delete-btn-link">
+              <button className="delete-btn">Delete Account</button>
+            </Link>
           </div>
         </div>
       </div>

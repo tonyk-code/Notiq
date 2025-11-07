@@ -74,6 +74,8 @@
   display: flex;
   justify-content: space-between;
   gap: 5px;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .delete-actions button {
@@ -81,7 +83,6 @@
   font-family: inherit;
   font-size: 1rem;
   cursor: pointer;
-  width: 50%;
   padding: 10px 0px;
   border-radius: 5px;
   font-family: inherit;
@@ -90,11 +91,17 @@
 .cancel-btn {
   color: rgba(0, 0, 0, 0.84);
   background-color: rgba(0, 0, 0, 0.077);
+  width: 50%;
 }
 
 .cancel-btn:hover {
   background-color: #00000024;
   transition: all 0.1s ease;
+}
+
+.delete-btn-link{
+  width: 50%;
+  text-decoration: none;
 }
 
 .delete-btn {
@@ -103,6 +110,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .delete-btn:hover {
