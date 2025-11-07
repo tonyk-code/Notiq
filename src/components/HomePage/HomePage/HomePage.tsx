@@ -170,7 +170,7 @@ export function HomePage() {
             className="header-right-homepage"
             onClick={() => setAccountActions(!accountActions)}
           >
-            {photoUrl !== null ? (
+            {photoUrl !== null || photoUrl === "" ? (
               <img
                 src={photoUrl}
                 alt="Profile"
