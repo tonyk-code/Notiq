@@ -1,9 +1,16 @@
-import { auth } from "../../config/FirebaseConfig";
-import { Link } from "react-router";
+import { auth, googleProvider } from "../../config/FirebaseConfig";
+import { Link, Navigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import "./Reauthenticate.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { useMutation } from "@tanstack/react-query";
+import {
+  deleteUser,
+  reauthenticateWithPopup,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 
 export function Reauthenticate() {
   const [providerId, setProviderId] = useState<string | null>(null);
@@ -19,6 +26,36 @@ export function Reauthenticate() {
     }
   }, []);
 
+  const handleGoogleReauth = async () => {
+    await reauthenticateWithPopup(auth!.currentUser!, googleProvider);
+    await deleteUser(auth!.currentUser!);
+  };
+
+  const handleEmailReauth = async (password: string) => {
+    const creditenials = EmailAuthProvider.credential(
+      auth!.currentUser!.email!,
+      password
+    );
+    await reauthenticateWithCredential(auth!.currentUser!, creditenials);
+    await deleteUser(auth!.currentUser!);
+  };
+
+  const GoogleReauth = useMutation({
+    mutationFn: handleGoogleReauth,
+    onSuccess: () => {
+      <Navigate to="/" replace />;
+    },
+    onError: () => {},
+  });
+
+  const EmailReauth = useMutation({
+    mutationFn: handleEmailReauth,
+    onSuccess: () => {
+      <Navigate to="/" replace />;
+    },
+    onError: () => {},
+  });
+
   return (
     <>
       <div className="reauth-container">
@@ -28,14 +65,20 @@ export function Reauthenticate() {
         <h2 className="reauth-title">Confirm Your Identity</h2>
 
         {providerId === "google.com" && (
-          <button className="google-btn">
+          <button className="google-btn" onClick={() => GoogleReauth.mutate()}>
             <img src="Google.png" width={15} height={15} />
             Continue with Google
           </button>
         )}
 
         {providerId === "password" && (
-          <form className="email-reauth-form">
+          <form
+            className="email-reauth-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              EmailReauth.mutate(password);
+            }}
+          >
             <div className="reauth-input-container" ref={inputContRef}>
               <input
                 type={showPassword ? "text" : "password"}
