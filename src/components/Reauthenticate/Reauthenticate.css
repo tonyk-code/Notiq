@@ -1,0 +1,132 @@
+.reauth-container {
+  padding: 20px 40px 30px;
+  background-color: white;
+  border-radius: 15px;
+  text-align: center;
+  width: 350px;
+  height: fit-content;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.186);
+}
+
+.good-bye-image-container {
+  background-color: rgba(0, 255, 255, 0.219);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin: 5px auto;
+  background-color: #107cf71c;
+  outline: 6px solid #107cf708;
+}
+
+.reauth-title {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin-bottom: 1.5rem;
+  background-color: transparent;
+  border: none;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 15px 10px;
+  margin-top: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.136);
+  border-radius: 7px;
+  background-color: transparent;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #2c3c59c1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.google-btn:hover {
+  border: 1px solid rgba(0, 0, 0, 0.253);
+}
+
+.reauth-input-container {
+  border: 2px solid #0000003f;
+  border-radius: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.fa-eye-icon {
+  margin-right: 5px;
+  color: rgba(0, 0, 0, 0.358);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.fa-eye-icon:hover {
+  color: rgba(0, 0, 0, 0.511);
+}
+
+.reauth-input-container input {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  padding: 10px;
+  font-family: inherit;
+  outline: none;
+}
+
+.reauth-input-container input::placeholder {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.248);
+}
+
+.email-reauth-form button {
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 12px 0px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(246, 82, 40, 0.91);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+}
+
+.email-reauth-form button:hover {
+  transition: all 0.1s ease;
+  outline: 2px solid rgba(214, 69, 33, 0.704);
+  transition: all 0.3s ease;
+}
+
+.reauth-container a{
+    text-decoration: none;
+}
+
+.reauth-container a .cancel-btn {
+  width: 100%;
+  padding: 15px 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 7px;
+  background-color: #107cf7af;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+.reauth-container a .cancel-btn:hover {
+  background-color: #107cf7bf;
+}
