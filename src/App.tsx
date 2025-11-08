@@ -10,6 +10,7 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState, type JSX } from "react";
 import { auth } from "./config/FirebaseConfig";
 import { Reauthenticate } from "./components/Reauthenticate/Reauthenticate";
+import { PageNotFound } from "./components/PageNotFound/PageNotFound";
 
 const ProtectedRoute = ({
   user,
@@ -73,6 +74,7 @@ function App() {
         />
         <Route path="/password-reset" element={<PasswordResetPage />} />
         <Route path="/setting up" element={<SetupPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );

@@ -1,0 +1,55 @@
+.page-not-found-container{
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-not-found-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+}
+
+.error-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-image{
+    margin-top: 150px;
+}
+
+.error-title{
+    font-size: 2.5rem;
+    margin-top: 10px;
+    color: rgb(68, 165, 230);
+}
+
+.error-message{
+    width: 550px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.642);
+}
+
+.home-button{
+    margin-top: 20px;
+    border: none;
+    padding: 15px 40px;
+    font-family: inherit;
+    background-color: rgb(25, 134, 206);
+    color: white;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.home-button:hover{
+    outline: 2px solid rgb(25, 134, 206);
+    transition: 0.25s ease all;
+}
