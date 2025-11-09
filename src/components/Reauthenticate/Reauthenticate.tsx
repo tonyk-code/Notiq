@@ -1,4 +1,4 @@
-import { auth, googleProvider } from "../../config/FirebaseConfig";
+import { auth, db, googleProvider } from "../../config/FirebaseConfig";
 import { Link, Navigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import "./Reauthenticate.css";
@@ -11,6 +11,8 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from "firebase/auth";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
 
 export function Reauthenticate() {
   const [providerId, setProviderId] = useState<string | null>(null);
@@ -27,16 +29,38 @@ export function Reauthenticate() {
   }, []);
 
   const handleGoogleReauth = async () => {
+    const uid = auth!.currentUser!.uid;
+    const userTasksRef = collection(db, "users", uid, "tasks");
+    const userDocRef = doc(db, "users", uid);
+
     await reauthenticateWithPopup(auth!.currentUser!, googleProvider);
+
+    const taskSnapShot = await getDocs(userTasksRef);
+    const deletions = taskSnapShot.docs.map((d) => deleteDoc(d.ref));
+    await Promise.all(deletions);
+
+    await deleteDoc(userDocRef);
     await deleteUser(auth!.currentUser!);
   };
 
   const handleEmailReauth = async (password: string) => {
+    const uid = auth!.currentUser!.uid;
+    const userDocRef = doc(db, "users", uid);
+    const taskRef = collection(db, "users", uid, "tasks");
+
     const creditenials = EmailAuthProvider.credential(
       auth!.currentUser!.email!,
       password
     );
     await reauthenticateWithCredential(auth!.currentUser!, creditenials);
+
+    const taskSnapShot = await getDocs(taskRef);
+    const deletions = taskSnapShot.docs.map((taskDoc) =>
+      deleteDoc(taskDoc.ref)
+    );
+    await Promise.all(deletions);
+
+    await deleteDoc(userDocRef);
     await deleteUser(auth!.currentUser!);
   };
 
@@ -45,7 +69,11 @@ export function Reauthenticate() {
     onSuccess: () => {
       <Navigate to="/" replace />;
     },
-    onError: () => {},
+    onError: (error) => {
+      if (error instanceof FirebaseError) {
+        console.log(error.code);
+      }
+    },
   });
 
   const EmailReauth = useMutation({
@@ -53,7 +81,11 @@ export function Reauthenticate() {
     onSuccess: () => {
       <Navigate to="/" replace />;
     },
-    onError: () => {},
+    onError: (error) => {
+      if (error instanceof FirebaseError) {
+        console.log(error.code);
+      }
+    },
   });
 
   return (

@@ -47,7 +47,6 @@ export function SignupPage() {
     );
 
     return new Promise<User | null>((resolve) => {
-
       const checkInterval = setInterval(async () => {
         await user.reload();
 
