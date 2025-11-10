@@ -7,12 +7,14 @@ import { motion } from "framer-motion";
 import "../HomePage/HomePage.css";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { errorMap, type Task, type errorType } from "../../../utils/Types";
+import { errorMap, type Task } from "../../../utils/Types";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
+import useAlert from "../../../hooks/useAlert";
+import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
 
 export function HomePage() {
   const [isTaskFormVisible, setIsTaskFormVisible] = useState<boolean>(false);
@@ -22,28 +24,9 @@ export function HomePage() {
   const [userName, setUserName] = useState<string | null | undefined>("");
   const [accountActions, setAccountActions] = useState(false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<errorType>({
-    message: "",
-    visible: false,
-  });
+  const { message, visible, type, displayMessage } = useAlert();
   const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  const displayErrorMessage = (message: string, duration: number = 3000) => {
-    setErrorMessage({
-      message: message,
-      visible: true,
-    });
-
-    if (duration > 0) {
-      setTimeout(() => {
-        setErrorMessage({
-          message: "",
-          visible: false,
-        });
-      }, duration);
-    }
-  };
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -93,46 +76,16 @@ export function HomePage() {
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "unexpected error occured";
-        displayErrorMessage(message);
+        displayMessage(message, "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
 
   return (
     <>
-      {errorMessage.visible && (
-        <motion.div
-          className="error-message-box"
-          initial={{
-            opacity: 0,
-            y: "-10px",
-          }}
-          animate={{
-            opacity: 1,
-            y: "0px",
-          }}
-          exit={{
-            y: "-10px",
-            opacity: 0,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          <div
-            className={
-              errorMessage.message ===
-              "Verification Email Sent! Please open the email from us and click the link. The link will expire in 2 minutes."
-                ? "error-container-green"
-                : "error-container-red"
-            }
-          >
-            <p>{errorMessage.message}</p>
-          </div>
-        </motion.div>
-      )}
+      {visible && <AnimatedAlert message={message} type={type} />}
       <div className="Home-page-container">
         <div className="header">
           <div className="header-left-container">
@@ -348,9 +301,7 @@ export function HomePage() {
         )}
 
         {deleteConfirmation && (
-          <DeleteAccountDialog
-            setDeleteConfirmation={setDeleteConfirmation}
-          />
+          <DeleteAccountDialog setDeleteConfirmation={setDeleteConfirmation} />
         )}
       </div>
     </>

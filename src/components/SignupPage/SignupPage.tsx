@@ -11,18 +11,16 @@ import { auth, googleProvider } from "../../config/FirebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
-import { motion } from "framer-motion";
 import "./SignupPage.css";
-import { type errorType, errorMap } from "../../utils/Types";
+import { errorMap } from "../../utils/Types";
 import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
+import useAlert from "../../hooks/useAlert";
+import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 
 export function SignupPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<errorType>({
-    message: "",
-    visible: false,
-  });
+  const { message, visible, type, displayMessage, clearAlert } = useAlert();
   const navigate = useNavigate();
 
   const signUp = async ({
@@ -41,8 +39,9 @@ export function SignupPage() {
 
     await sendEmailVerification(user);
 
-    displayErrorMessage(
+    displayMessage(
       "Verification Email Sent! Please open the email from us and Check your inbox (and spam folder) and click the link. The link will expire in 2 minutes.",
+      "success",
       0
     );
 
@@ -70,38 +69,26 @@ export function SignupPage() {
     });
   };
 
-  const displayErrorMessage = (message: string, duration: number = 3000) => {
-    setErrorMessage({
-      message: message,
-      visible: true,
-    });
-
-    if (duration > 0) {
-      setTimeout(() => {
-        setErrorMessage({
-          message: "",
-          visible: false,
-        });
-      }, duration);
-    }
-  };
-
   const { mutate, isPending } = useMutation({
     mutationFn: signUp,
     onSuccess: (user) => {
       if (user) {
+        clearAlert();
         navigate("/setting up");
       } else {
-        displayErrorMessage("Verification timed out. Please sign up again.");
+        clearAlert();
+        displayMessage(
+          "Verification timed out. Please sign up again.",
+          "error"
+        );
       }
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {
-        const code = errorMap[error.code] || "An unexpected error occurred.";
-
-        displayErrorMessage(code);
+        const message = errorMap[error.code] || "An unexpected error occurred.";
+        displayMessage(message, "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
@@ -118,16 +105,16 @@ export function SignupPage() {
       if (user) {
         navigate("/setting up");
       } else {
-        displayErrorMessage("An unexpected error occurred.");
+        displayMessage("An unexpected error occurred.", "error");
       }
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "An unexpected error occurred.";
 
-        displayErrorMessage(message);
+        displayMessage(message, "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
@@ -135,37 +122,7 @@ export function SignupPage() {
   return (
     <main>
       <HeaderBrand />
-      {errorMessage.visible && (
-        <motion.div
-          className="error-message-box"
-          initial={{
-            opacity: 0,
-            y: "-10px",
-          }}
-          animate={{
-            opacity: 1,
-            y: "0px",
-          }}
-          exit={{
-            y: "-10px",
-            opacity: 0,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          <div
-            className={
-              errorMessage.message ===
-              "Verification Email Sent! Please open the email from us and Check your inbox (and spam folder) and click the link. The link will expire in 2 minutes."
-                ? "error-container-green"
-                : "error-container-red"
-            }
-          >
-            <p>{errorMessage.message}</p>
-          </div>
-        </motion.div>
-      )}
+      {visible && <AnimatedAlert message={message} type={type} />}
       <section className="login-card">
         <hgroup className="login-header">
           <h1 className="login-title">Welcome</h1>
@@ -201,7 +158,7 @@ export function SignupPage() {
         </form>
         <button
           className="sign-in-button primary-button"
-          disabled={isPending || errorMessage.visible}
+          disabled={isPending || visible}
           onClick={() => mutate({ email, password })}
         >
           {isPending ? (

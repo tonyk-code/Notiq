@@ -3,34 +3,15 @@ import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
 import "./PasswordResetPage.css";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../config/FirebaseConfig";
-import { motion } from "framer-motion";
 import { useState } from "react";
-import { errorMap, type errorType } from "../../utils/Types";
+import { errorMap } from "../../utils/Types";
 import { FirebaseError } from "firebase/app";
+import useAlert from "../../hooks/useAlert";
+import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 
 export function PasswordResetPage() {
   const [email, setEmail] = useState<string>("");
-
-  const [errorMessage, setErrorMessage] = useState<errorType>({
-    message: "",
-    visible: false,
-  });
-
-  const displayErrorMessage = (message: string, duration: number = 3000) => {
-    setErrorMessage({
-      message: message,
-      visible: true,
-    });
-
-    if (duration > 0) {
-      setTimeout(() => {
-        setErrorMessage({
-          message: "",
-          visible: false,
-        });
-      }, duration);
-    }
-  };
+  const { message, visible, type, displayMessage } = useAlert();
 
   const sendResetLink = async (email: string): Promise<void> => {
     if (!email) {
@@ -42,9 +23,10 @@ export function PasswordResetPage() {
   const { mutate, isPending } = useMutation({
     mutationFn: sendResetLink,
     onSuccess: () => {
-      displayErrorMessage(
+      displayMessage(
         "Password reset link sent! Check your inbox (and spam folder) for instructions.",
-        10000
+        "success",
+        60000
       );
     },
     onError: (error) => {
@@ -64,7 +46,7 @@ export function PasswordResetPage() {
         console.error("Mutation Error: " + message);
       }
 
-      displayErrorMessage(message);
+      displayMessage(message, "error");
     },
   });
 
@@ -75,37 +57,7 @@ export function PasswordResetPage() {
 
   return (
     <>
-      {errorMessage.visible && (
-        <motion.div
-          className="error-message-box-password-reset"
-          initial={{
-            opacity: 0,
-            y: "-10px",
-          }}
-          animate={{
-            opacity: 1,
-            y: "0px",
-          }}
-          exit={{
-            y: "-10px",
-            opacity: 0,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          <div
-            className={
-              errorMessage.message ===
-              "Password reset link sent! Check your inbox (and spam folder) for instructions."
-                ? "error-container-green-password-reset"
-                : "error-container-red-password-reset"
-            }
-          >
-            <p>{errorMessage.message}</p>
-          </div>
-        </motion.div>
-      )}
+      {visible && <AnimatedAlert message={message} type={type} />}
       <HeaderBrand />
 
       <div className="forgot-password-container">
@@ -139,7 +91,7 @@ export function PasswordResetPage() {
           <button
             type="submit"
             className="reset-password-button"
-            disabled={isPending}
+            disabled={isPending || visible}
           >
             {isPending ? (
               <div className="dot-spinner">

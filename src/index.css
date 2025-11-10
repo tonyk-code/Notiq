@@ -14,3 +14,12 @@ body {
   font-style: normal;
   font-variation-settings: "wdth" 100;
 }
+
+#root-animated-alert {
+  position: fixed;
+  top: 20px;
+  z-index: 222;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}

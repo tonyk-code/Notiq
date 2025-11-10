@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
-import { motion } from "framer-motion";
-import { type errorType, errorMap } from "../../utils/Types";
+import { errorMap } from "../../utils/Types";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -15,32 +14,15 @@ import {
 import { auth, googleProvider } from "../../config/FirebaseConfig";
 import "./LoginPage.css";
 import { FirebaseError } from "firebase/app";
+import useAlert from "../../hooks/useAlert";
+import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 
 export function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<errorType>({
-    message: "",
-    visible: false,
-  });
+  const { message, visible, type, displayMessage, clearAlert } = useAlert();
   const [rememberMe, setRememberMe] = useState<boolean>(true);
   const navigate = useNavigate();
-
-  const displayErrorMessage = (message: string, duration: number = 3000) => {
-    setErrorMessage({
-      message: message,
-      visible: true,
-    });
-
-    if (duration > 0) {
-      setTimeout(() => {
-        setErrorMessage({
-          message: "",
-          visible: false,
-        });
-      }, duration);
-    }
-  };
 
   const handleSignInWithEmail = async ({
     email,
@@ -68,17 +50,18 @@ export function LoginPage() {
     mutationFn: handleSignInWithEmail,
     onSuccess: (user) => {
       if (user) {
+        clearAlert();
         navigate("/Home page");
       } else {
-        displayErrorMessage("An unexpected error occurred.");
+        displayMessage("An unexpected error occurred.", "error");
       }
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "An unexpected error occurred.";
-        displayErrorMessage(message);
+        displayMessage(message, "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
@@ -97,17 +80,18 @@ export function LoginPage() {
     mutationFn: handleSignInWithGoogle,
     onSuccess: (user) => {
       if (user) {
+        clearAlert();
         navigate("/Home page");
       } else {
-        displayErrorMessage("An unexpected error occurred.");
+        displayMessage("An unexpected error occurred.", "error");
       }
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "An unexpected error occurred.";
-        displayErrorMessage(message);
+        displayMessage(message, "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
@@ -115,37 +99,7 @@ export function LoginPage() {
   return (
     <main className="login-page">
       <HeaderBrand />
-      {errorMessage.visible && (
-        <motion.div
-          className="error-message-box"
-          initial={{
-            opacity: 0,
-            y: "-10px",
-          }}
-          animate={{
-            opacity: 1,
-            y: "0px",
-          }}
-          exit={{
-            y: "-10px",
-            opacity: 0,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          <div
-            className={
-              errorMessage.message ===
-              "Verification Email Sent! Please open the email from us and click the link. The link will expire in 2 minutes."
-                ? "error-container-green"
-                : "error-container-red"
-            }
-          >
-            <p>{errorMessage.message}</p>
-          </div>
-        </motion.div>
-      )}
+      {visible && <AnimatedAlert message={message} type={type} />}
       <section className="login-card">
         <hgroup className="login-header">
           <h1 className="login-title">Welcome back!</h1>
@@ -201,7 +155,7 @@ export function LoginPage() {
           type="submit"
           className="sign-in-button primary-button"
           onClick={() => signInWithEmail.mutate({ email, password })}
-          disabled={signInWithEmail.isPending || errorMessage.visible}
+          disabled={signInWithEmail.isPending || visible}
         >
           {signInWithEmail.isPending ? (
             <div className="dot-spinner">

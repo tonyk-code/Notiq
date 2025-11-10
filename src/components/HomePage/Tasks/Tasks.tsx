@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDoc, doc } from "firebase/firestore";
 import "../Tasks/Tasks.css";
 import { auth, db } from "../../../config/FirebaseConfig";
-import { motion } from "framer-motion";
-import { errorMap, type errorType } from "../../../utils/Types";
-import { useState } from "react";
+import { errorMap } from "../../../utils/Types";
 import { FirebaseError } from "firebase/app";
+import useAlert from "../../../hooks/useAlert";
+import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
 
 export function Tasks({
   id,
@@ -20,25 +20,8 @@ export function Tasks({
   createdAt: string;
   tags: string;
 }) {
-  const [errorMessage, setErrorMessage] = useState<errorType>({
-    message: "",
-    visible: false,
-  });
-  const displayErrorMessage = (message: string, duration: number = 3000) => {
-    setErrorMessage({
-      message: message,
-      visible: true,
-    });
+  const { message, visible, type, displayMessage } = useAlert();
 
-    if (duration > 0) {
-      setTimeout(() => {
-        setErrorMessage({
-          message: "",
-          visible: false,
-        });
-      }, duration);
-    }
-  };
   const queryClient = useQueryClient();
 
   const deleteTaskFn = async (id: string): Promise<void> => {
@@ -51,6 +34,7 @@ export function Tasks({
   const deleteTask = useMutation({
     mutationFn: deleteTaskFn,
     onSuccess: () => {
+      displayMessage("Task deleted", "success");
       queryClient.invalidateQueries({
         queryKey: ["todos", auth.currentUser?.uid],
       });
@@ -58,45 +42,15 @@ export function Tasks({
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "unexpected error occured";
-        displayErrorMessage(message);
+        displayMessage(message, "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
   return (
     <>
-      {errorMessage.visible && (
-        <motion.div
-          className="error-message-box"
-          initial={{
-            opacity: 0,
-            y: "-10px",
-          }}
-          animate={{
-            opacity: 1,
-            y: "0px",
-          }}
-          exit={{
-            y: "-10px",
-            opacity: 0,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          <div
-            className={
-              errorMessage.message ===
-              "Verification Email Sent! Please open the email from us and click the link. The link will expire in 2 minutes."
-                ? "error-container-green"
-                : "error-container-red"
-            }
-          >
-            <p>{errorMessage.message}</p>
-          </div>
-        </motion.div>
-      )}
+      {visible && <AnimatedAlert message={message} type={type} />}
       <div className="task-container" key={id}>
         <div className="task-header">
           <p className="task-title">{title}</p>

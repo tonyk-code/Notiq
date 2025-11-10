@@ -5,8 +5,9 @@ import { collection, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../../config/FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { errorMap, type errorType } from "../../../utils/Types";
-import { motion } from "framer-motion";
+import { errorMap } from "../../../utils/Types";
+import useAlert from "../../../hooks/useAlert";
+import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
 
 export function AddTaskForm({
   isTaskFormVisible,
@@ -19,29 +20,10 @@ export function AddTaskForm({
   const [descriptionVal, setDescriptionVal] = useState<string>("");
   const [tagsVal, setTagsVal] = useState<string>("");
   const [uid, setUid] = useState<string | null>("");
-  const [errorMessage, setErrorMessage] = useState<errorType>({
-    message: "",
-    visible: false,
-  });
+  const { message, type, visible, displayMessage } = useAlert();
   const titleRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
   const queryClient = useQueryClient();
-
-  const displayErrorMessage = (message: string, duration: number = 3000) => {
-    setErrorMessage({
-      message: message,
-      visible: true,
-    });
-
-    if (duration > 0) {
-      setTimeout(() => {
-        setErrorMessage({
-          message: "",
-          visible: false,
-        });
-      }, duration);
-    }
-  };
 
   onAuthStateChanged(auth, (user) => {
     setUid(user ? user.uid : null);
@@ -87,38 +69,17 @@ export function AddTaskForm({
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "Unexpected error ocured";
-        displayErrorMessage(message);
+        displayMessage(message , "error");
       } else {
-        displayErrorMessage("An unknown system error occurred.");
+        displayMessage("An unknown system error occurred." , "error");
       }
     },
   });
 
   return (
     <>
-      {errorMessage.visible && (
-        <motion.div
-          className="error-message-box-add-to-task-page"
-          initial={{
-            opacity: 0,
-            y: "-10px",
-          }}
-          animate={{
-            opacity: 1,
-            y: "0px",
-          }}
-          exit={{
-            y: "-10px",
-            opacity: 0,
-          }}
-          transition={{
-            duration: 0.3,
-          }}
-        >
-          <div className="error-container-red-add-to-task-page">
-            <p>{errorMessage.message}</p>
-          </div>
-        </motion.div>
+      {visible && (
+        <AnimatedAlert message={message} type={type}/>
       )}
       <div
         className="blur-background"

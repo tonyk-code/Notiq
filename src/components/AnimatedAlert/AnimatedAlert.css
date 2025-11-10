@@ -1,0 +1,30 @@
+
+
+.error-message-box {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  
+}
+
+.error-container-red {
+  padding: 12px 15px;
+  background-color: rgba(238, 55, 55, 0.442);
+  border-radius: 10px;
+  font-weight: bold;
+  color: rgba(150, 10, 10, 0.848);
+  font-size: 0.8rem;
+  width: fit-content;
+  text-align: center;
+}
+
+.error-container-green {
+  padding: 12px 15px;
+  background-color: rgba(31, 174, 23, 0.442);
+  border-radius: 10px;
+  font-weight: bold;
+  color: rgb(9, 88, 5);
+  font-size: 0.8rem;
+  width: fit-content;
+  text-align: center;
+}

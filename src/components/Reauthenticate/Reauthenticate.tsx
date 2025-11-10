@@ -13,12 +13,16 @@ import {
 } from "firebase/auth";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
+import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
+import useAlert from "../../hooks/useAlert";
+import { errorMap } from "../../utils/Types";
 
 export function Reauthenticate() {
   const [providerId, setProviderId] = useState<string | null>(null);
   const inputContRef = useRef<HTMLInputElement | null>(null);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { message, visible, type, displayMessage, clearAlert } = useAlert();
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -67,11 +71,13 @@ export function Reauthenticate() {
   const GoogleReauth = useMutation({
     mutationFn: handleGoogleReauth,
     onSuccess: () => {
+      clearAlert();
       <Navigate to="/" replace />;
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {
-        console.log(error.code);
+        const mess = errorMap[error.code] || "";
+        displayMessage(mess, "error");
       }
     },
   });
@@ -79,17 +85,20 @@ export function Reauthenticate() {
   const EmailReauth = useMutation({
     mutationFn: handleEmailReauth,
     onSuccess: () => {
+      clearAlert();
       <Navigate to="/" replace />;
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {
-        console.log(error.code);
+        const mess = errorMap[error.code] || "";
+        displayMessage(mess, "error");
       }
     },
   });
 
   return (
     <>
+      {visible && <AnimatedAlert type={type} message={message} />}
       <div className="reauth-container">
         <div className="good-bye-image-container">
           <img src="Good Bye.png" alt="" width={53} height={80} />
