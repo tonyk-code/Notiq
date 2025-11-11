@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import './HeaderBrand.css'
+import "./HeaderBrand.css";
 
 export function HeaderBrand() {
   const navigate = useNavigate();

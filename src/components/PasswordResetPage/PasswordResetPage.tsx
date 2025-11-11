@@ -8,6 +8,7 @@ import { errorMap } from "../../utils/Types";
 import { FirebaseError } from "firebase/app";
 import useAlert from "../../hooks/useAlert";
 import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
+import Spinner from "../Spinner/Spinner";
 
 export function PasswordResetPage() {
   const [email, setEmail] = useState<string>("");
@@ -93,20 +94,7 @@ export function PasswordResetPage() {
             className="reset-password-button"
             disabled={isPending || visible}
           >
-            {isPending ? (
-              <div className="dot-spinner">
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-              </div>
-            ) : (
-              "Reset Password"
-            )}
+            {isPending ? <Spinner color="dot-spinner" /> : "Reset Password"}
           </button>
         </form>
       </div>

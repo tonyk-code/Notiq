@@ -16,6 +16,7 @@ import { errorMap } from "../../utils/Types";
 import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
 import useAlert from "../../hooks/useAlert";
 import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
+import Spinner from "../Spinner/Spinner";
 
 export function SignupPage() {
   const [email, setEmail] = useState<string>("");
@@ -161,20 +162,7 @@ export function SignupPage() {
           disabled={isPending || visible}
           onClick={() => mutate({ email, password })}
         >
-          {isPending ? (
-            <div className="dot-spinner">
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-            </div>
-          ) : (
-            "Sign up"
-          )}
+          {isPending ? <Spinner color="dot-spinner" /> : "Sign up"}
         </button>
         <button
           type="button"
@@ -183,16 +171,7 @@ export function SignupPage() {
         >
           <img src="Google.png" width={15} height={15} />
           {signInWithGoogleMutate.isPending ? (
-            <div className="dot-spinner dot-spinner-black">
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-            </div>
+            <Spinner color="dot-spinner-black" />
           ) : (
             "Sign up with Google"
           )}

@@ -16,6 +16,7 @@ import { FirebaseError } from "firebase/app";
 import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 import useAlert from "../../hooks/useAlert";
 import { errorMap } from "../../utils/Types";
+import Spinner from "../Spinner/Spinner";
 
 export function Reauthenticate() {
   const [providerId, setProviderId] = useState<string | null>(null);
@@ -108,7 +109,11 @@ export function Reauthenticate() {
         {providerId === "google.com" && (
           <button className="google-btn" onClick={() => GoogleReauth.mutate()}>
             <img src="Google.png" width={15} height={15} />
-            Continue with Google
+            {GoogleReauth.isPending ? (
+              <Spinner color="dot-spinner-black" />
+            ) : (
+              "Continue with Google"
+            )}
           </button>
         )}
 
@@ -145,7 +150,13 @@ export function Reauthenticate() {
                 )}
               </div>
             </div>
-            <button type="submit">Confirm and Delete Account</button>
+            <button type="submit">
+              {EmailReauth.isPending ? (
+                <Spinner color="dot-spinner" />
+              ) : (
+                "Confirm and Delete Account"
+              )}
+            </button>
           </form>
         )}
 

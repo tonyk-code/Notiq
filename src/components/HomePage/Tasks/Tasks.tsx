@@ -6,6 +6,7 @@ import { errorMap } from "../../../utils/Types";
 import { FirebaseError } from "firebase/app";
 import useAlert from "../../../hooks/useAlert";
 import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
+import Spinner from "../../Spinner/Spinner";
 
 export function Tasks({
   id,
@@ -59,16 +60,7 @@ export function Tasks({
             onClick={() => deleteTask.mutate(id)}
           >
             {deleteTask.isPending ? (
-              <div className="dot-spinner-red">
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-                <div className="dot-spinner__dot-red"></div>
-              </div>
+              <Spinner color="dot-spinner-red" />
             ) : (
               <i className="fa-regular fa-trash-can"></i>
             )}

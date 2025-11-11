@@ -110,8 +110,8 @@
   transition: all 0.3s ease;
 }
 
-.reauth-container a{
-    text-decoration: none;
+.reauth-container a {
+  text-decoration: none;
 }
 
 .reauth-container a .cancel-btn {

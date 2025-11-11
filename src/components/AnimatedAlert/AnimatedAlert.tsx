@@ -31,7 +31,11 @@ export default function AnimatedAlert({
         duration: 0.3,
       }}
     >
-      <div className={ type === "error" ? "error-container-red" : "error-container-green"}>
+      <div
+        className={
+          type === "error" ? "error-container-red" : "error-container-green"
+        }
+      >
         <p>{message}</p>
       </div>
     </motion.div>,

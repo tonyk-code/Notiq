@@ -8,6 +8,7 @@ import { FirebaseError } from "firebase/app";
 import { errorMap } from "../../../utils/Types";
 import useAlert from "../../../hooks/useAlert";
 import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
+import Spinner from "../../Spinner/Spinner";
 
 export function AddTaskForm({
   isTaskFormVisible,
@@ -69,18 +70,16 @@ export function AddTaskForm({
     onError: (error) => {
       if (error instanceof FirebaseError) {
         const message = errorMap[error.code] || "Unexpected error ocured";
-        displayMessage(message , "error");
+        displayMessage(message, "error");
       } else {
-        displayMessage("An unknown system error occurred." , "error");
+        displayMessage("An unknown system error occurred.", "error");
       }
     },
   });
 
   return (
     <>
-      {visible && (
-        <AnimatedAlert message={message} type={type}/>
-      )}
+      {visible && <AnimatedAlert message={message} type={type} />}
       <div
         className="blur-background"
         onClick={() => setIsTaskFormVisible(false)}
@@ -172,20 +171,7 @@ export function AddTaskForm({
               addTask.mutate({ title, description, tags });
             }}
           >
-            {addTask.isPending ? (
-              <div className="dot-spinner">
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-                <div className="dot-spinner__dot"></div>
-              </div>
-            ) : (
-              "Add Task"
-            )}
+            {addTask.isPending ? <Spinner color="dot-spinner" /> : "Add Task"}
           </button>
         </div>
       </div>

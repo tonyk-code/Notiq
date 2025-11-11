@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import useAlert from "../../../hooks/useAlert";
 import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
+import Spinner from "../../Spinner/Spinner";
 
 export function HomePage() {
   const [isTaskFormVisible, setIsTaskFormVisible] = useState<boolean>(false);
@@ -174,16 +175,7 @@ export function HomePage() {
                 }}
               >
                 {signOutMutation.isPending ? (
-                  <div className="dot-spinner dot-spinner-black">
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                    <div className="dot-spinner__dot"></div>
-                  </div>
+                  <Spinner color="dot-spinner-black" />
                 ) : (
                   "Sign out"
                 )}

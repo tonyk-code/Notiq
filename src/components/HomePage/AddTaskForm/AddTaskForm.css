@@ -112,35 +112,3 @@ h2 {
   transform: scale(1.06);
   transition: transform ease 0.3s;
 }
-
-.error-message-box-add-to-task-page {
-  position: fixed;
-  top: 10px;
-  transform: translate(-50%, -50%);
-  justify-content: center;
-  width: 100%;
-  display: flex;
-  z-index: 10;
-}
-
-.error-container-red-add-to-task-page {
-  padding: 12px 15px;
-  background-color: rgba(238, 55, 55, 0.442);
-  border-radius: 10px;
-  font-weight: bold;
-  color: rgba(150, 10, 10, 0.848);
-  font-size: 0.8rem;
-  width: fit-content;
-  text-align: center;
-}
-
-.error-container-green {
-  padding: 12px 15px;
-  background-color: rgba(31, 174, 23, 0.442);
-  border-radius: 10px;
-  font-weight: bold;
-  color: rgb(9, 88, 5);
-  font-size: 0.8rem;
-  width: fit-content;
-  text-align: center;
-}

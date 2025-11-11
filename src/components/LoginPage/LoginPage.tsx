@@ -16,6 +16,7 @@ import "./LoginPage.css";
 import { FirebaseError } from "firebase/app";
 import useAlert from "../../hooks/useAlert";
 import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
+import Spinner from "../Spinner/Spinner";
 
 export function LoginPage() {
   const [email, setEmail] = useState<string>("");
@@ -157,20 +158,7 @@ export function LoginPage() {
           onClick={() => signInWithEmail.mutate({ email, password })}
           disabled={signInWithEmail.isPending || visible}
         >
-          {signInWithEmail.isPending ? (
-            <div className="dot-spinner">
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-            </div>
-          ) : (
-            "Sign in"
-          )}
+          {signInWithEmail.isPending ? <Spinner color="" /> : "Sign in"}
         </button>
         <button
           type="button"
@@ -179,16 +167,7 @@ export function LoginPage() {
         >
           <img src="Google.png" width={15} height={15} />
           {signInWithGoogle.isPending ? (
-            <div className="dot-spinner dot-spinner-black">
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-              <div className="dot-spinner__dot"></div>
-            </div>
+            <Spinner color="dot-spinner-black" />
           ) : (
             "Sign in with Google"
           )}
