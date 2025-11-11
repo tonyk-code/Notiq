@@ -1,124 +1,22 @@
-import { useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  deleteUser,
-  signOut,
-  type User,
-  signInWithPopup,
-} from "firebase/auth";
-import { auth, googleProvider } from "../../config/FirebaseConfig";
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { FirebaseError } from "firebase/app";
+import { Link } from "react-router-dom";
 import "./SignupPage.css";
-import { errorMap } from "../../utils/Types";
 import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
-import useAlert from "../../hooks/useAlert";
 import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 import Spinner from "../Spinner/Spinner";
+import useSignup from "./hooks/useSignup";
 
 export function SignupPage() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { message, visible, type, displayMessage, clearAlert } = useAlert();
-  const navigate = useNavigate();
-
-  const signUp = async ({
+  const {
+    visible,
+    message,
+    type,
     email,
+    setEmail,
+    signupWithEmail,
     password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-
-    await sendEmailVerification(user);
-
-    displayMessage(
-      "Verification Email Sent! Please open the email from us and Check your inbox (and spam folder) and click the link. The link will expire in 2 minutes.",
-      "success",
-      0
-    );
-
-    return new Promise<User | null>((resolve) => {
-      const checkInterval = setInterval(async () => {
-        await user.reload();
-
-        if (user.emailVerified) {
-          clearInterval(checkInterval);
-          clearTimeout(failTimeout);
-          resolve(user);
-        }
-      }, 1000);
-
-      const failTimeout = setTimeout(async () => {
-        await user.reload();
-        clearInterval(checkInterval);
-
-        if (!user.emailVerified) {
-          await deleteUser(user);
-          await signOut(auth);
-          resolve(null);
-        }
-      }, 120000);
-    });
-  };
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: signUp,
-    onSuccess: (user) => {
-      if (user) {
-        clearAlert();
-        navigate("/setting up");
-      } else {
-        clearAlert();
-        displayMessage(
-          "Verification timed out. Please sign up again.",
-          "error"
-        );
-      }
-    },
-    onError: (error) => {
-      if (error instanceof FirebaseError) {
-        const message = errorMap[error.code] || "An unexpected error occurred.";
-        displayMessage(message, "error");
-      } else {
-        displayMessage("An unknown system error occurred.", "error");
-      }
-    },
-  });
-
-  const signInWithGoogle = async (): Promise<User> => {
-    const userCredential = await signInWithPopup(auth, googleProvider);
-    const user = userCredential.user;
-    return user;
-  };
-
-  const signInWithGoogleMutate = useMutation({
-    mutationFn: signInWithGoogle,
-    onSuccess: (user) => {
-      if (user) {
-        navigate("/setting up");
-      } else {
-        displayMessage("An unexpected error occurred.", "error");
-      }
-    },
-    onError: (error) => {
-      if (error instanceof FirebaseError) {
-        const message = errorMap[error.code] || "An unexpected error occurred.";
-
-        displayMessage(message, "error");
-      } else {
-        displayMessage("An unknown system error occurred.", "error");
-      }
-    },
-  });
+    setPassword,
+    signInWithGoogleMutate,
+  } = useSignup();
 
   return (
     <main>
@@ -140,7 +38,7 @@ export function SignupPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={isPending}
+              disabled={signupWithEmail.isPending}
             />
           </div>
 
@@ -153,16 +51,20 @@ export function SignupPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              disabled={isPending}
+              disabled={signupWithEmail.isPending}
             />
           </div>
         </form>
         <button
           className="sign-in-button primary-button"
-          disabled={isPending || visible}
-          onClick={() => mutate({ email, password })}
+          disabled={signupWithEmail.isPending || visible}
+          onClick={() => signupWithEmail.mutate({ email, password })}
         >
-          {isPending ? <Spinner color="dot-spinner" /> : "Sign up"}
+          {signupWithEmail.isPending ? (
+            <Spinner color="dot-spinner" />
+          ) : (
+            "Sign up"
+          )}
         </button>
         <button
           type="button"

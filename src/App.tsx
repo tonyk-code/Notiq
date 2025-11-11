@@ -4,7 +4,7 @@ import { LoginPage } from "./components/LoginPage/LoginPage";
 import { SignupPage } from "./components/SignupPage/SignupPage";
 import { HomePage } from "./components/HomePage/HomePage/HomePage";
 import "./App.css";
-import { SetupPage } from "./components/LoadingPage/SetupPage";
+import { SetupPage } from "./components/SetupPage/SetupPage";
 import { PasswordResetPage } from "./components/PasswordResetPage/PasswordResetPage";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState, type JSX } from "react";

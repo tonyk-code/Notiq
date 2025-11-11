@@ -1,101 +1,24 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
-import { errorMap } from "../../utils/Types";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import {
-  browserLocalPersistence,
-  browserSessionPersistence,
-  setPersistence,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  type User,
-} from "firebase/auth";
-import { auth, googleProvider } from "../../config/FirebaseConfig";
 import "./LoginPage.css";
-import { FirebaseError } from "firebase/app";
-import useAlert from "../../hooks/useAlert";
 import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 import Spinner from "../Spinner/Spinner";
+import useLogin from "./hooks/useLogin";
 
 export function LoginPage() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { message, visible, type, displayMessage, clearAlert } = useAlert();
-  const [rememberMe, setRememberMe] = useState<boolean>(true);
-  const navigate = useNavigate();
-
-  const handleSignInWithEmail = async ({
+  const {
     email,
+    setEmail,
     password,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<User> => {
-    const persistanceType = rememberMe
-      ? browserLocalPersistence
-      : browserSessionPersistence;
-
-    await setPersistence(auth, persistanceType);
-
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-    return user;
-  };
-
-  const signInWithEmail = useMutation({
-    mutationFn: handleSignInWithEmail,
-    onSuccess: (user) => {
-      if (user) {
-        clearAlert();
-        navigate("/Home page");
-      } else {
-        displayMessage("An unexpected error occurred.", "error");
-      }
-    },
-    onError: (error) => {
-      if (error instanceof FirebaseError) {
-        const message = errorMap[error.code] || "An unexpected error occurred.";
-        displayMessage(message, "error");
-      } else {
-        displayMessage("An unknown system error occurred.", "error");
-      }
-    },
-  });
-
-  const handleSignInWithGoogle = async () => {
-    const persistanceType = rememberMe
-      ? browserLocalPersistence
-      : browserSessionPersistence;
-
-    await setPersistence(auth, persistanceType);
-    const userCredential = await signInWithPopup(auth, googleProvider);
-    return userCredential.user;
-  };
-
-  const signInWithGoogle = useMutation({
-    mutationFn: handleSignInWithGoogle,
-    onSuccess: (user) => {
-      if (user) {
-        clearAlert();
-        navigate("/Home page");
-      } else {
-        displayMessage("An unexpected error occurred.", "error");
-      }
-    },
-    onError: (error) => {
-      if (error instanceof FirebaseError) {
-        const message = errorMap[error.code] || "An unexpected error occurred.";
-        displayMessage(message, "error");
-      } else {
-        displayMessage("An unknown system error occurred.", "error");
-      }
-    },
-  });
+    setPassword,
+    message,
+    visible,
+    type,
+    signInWithGoogle,
+    signInWithEmail,
+    rememberMe,
+    setRememberMe,
+  } = useLogin();
 
   return (
     <main className="login-page">
