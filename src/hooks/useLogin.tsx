@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { errorMap } from "../../../utils/Types";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -10,9 +9,10 @@ import {
   signInWithPopup,
   type User,
 } from "firebase/auth";
-import { auth, googleProvider } from "../../../config/FirebaseConfig";
 import { FirebaseError } from "firebase/app";
-import useAlert from "../../../hooks/useAlert";
+import { auth, googleProvider } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
 export default function useLogin() {
   const [email, setEmail] = useState<string>("");
@@ -48,7 +48,7 @@ export default function useLogin() {
     onSuccess: (user) => {
       if (user) {
         clearAlert();
-        navigate("/Home page");
+        navigate("/home");
       } else {
         displayMessage("An unexpected error occurred.", "error");
       }
@@ -78,7 +78,7 @@ export default function useLogin() {
     onSuccess: (user) => {
       if (user) {
         clearAlert();
-        navigate("/Home page");
+        navigate("/home");
       } else {
         displayMessage("An unexpected error occurred.", "error");
       }

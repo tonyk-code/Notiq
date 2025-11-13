@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { LoginPage } from "../components/LoginPage/LoginPage";
-import { SignupPage } from "../components/SignupPage/SignupPage";
-import { HomePage } from "../components/HomePage/HomePage/HomePage";
-import { Reauthenticate } from "../components/Reauthenticate/Reauthenticate";
-import { PasswordResetPage } from "../components/PasswordResetPage/PasswordResetPage";
-import { PageNotFound } from "../components/PageNotFound/PageNotFound";
-import { SetupPage } from "../components/SetupPage/SetupPage";
-import { DashboardPage } from "../components/DashboardPage/DashboardPage";
 import ProtectedRoute from "./Protected";
+import { HomePage } from "../pages/HomePage/HomePage";
+import { SignupPage } from "../pages/SignupPage/SignupPage";
+import { LoginPage } from "../pages/LoginPage/LoginPage";
+import { PageNotFound } from "../pages/PageNotFound/PageNotFound";
+import { PasswordResetPage } from "../pages/PasswordResetPage/PasswordResetPage";
+import { Reauthenticate } from "../pages/ReauthenticatePage/Reauthenticate";
+import { SetupPage } from "../pages/SetupPage/SetupPage";
+import { DashboardPage } from "../pages/DashboardPage/DashboardPage";
 
 export default function Route() {
   const authenticatedRoutes = [

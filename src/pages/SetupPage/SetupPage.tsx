@@ -1,9 +1,9 @@
 import { auth } from "../../config/FirebaseConfig";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
 import "./SetupPage.css";
-import useUserSetup from "./hooks/useUserSetup";
+import useUserSetup from "../../hooks/useUserSetup";
+import AnimatedAlert from "../../components/AnimatedAlert/AnimatedAlert";
 
 export function SetupPage() {
   const { mutate, message, visible, type, navigate } = useUserSetup();

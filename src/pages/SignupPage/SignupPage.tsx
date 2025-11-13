@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import "./SignupPage.css";
-import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
-import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
-import Spinner from "../Spinner/Spinner";
-import useSignup from "./hooks/useSignup";
+import useSignup from "../../hooks/useSignup";
+import AnimatedAlert from "../../components/AnimatedAlert/AnimatedAlert";
+import { HeaderBrand } from "../../components/HeaderBrand/HeaderBrand";
+import Spinner from "../../components/Spinner/Spinner";
 
 export function SignupPage() {
   const {

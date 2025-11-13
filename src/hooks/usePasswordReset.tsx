@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../../config/FirebaseConfig";
 import { useState } from "react";
-import { errorMap } from "../../../utils/Types";
 import { FirebaseError } from "firebase/app";
-import useAlert from "../../../hooks/useAlert";
+import { auth } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
 export default function usePasswordReset() {
   const [email, setEmail] = useState<string>("");

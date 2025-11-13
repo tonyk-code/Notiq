@@ -1,13 +1,13 @@
-import { Tasks } from "../Tasks/Tasks";
-import { DeleteAccountDialog } from "../DeleteAccountDialog/DeleteAccountDialog";
-import { AddTaskForm } from "../AddTaskForm/AddTaskForm";
 import { motion } from "framer-motion";
 import "../HomePage/HomePage.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
-import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
-import Spinner from "../../Spinner/Spinner";
-import useHomePageLogic from "./hooks/useHomePageLogic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AnimatedAlert from "../../components/AnimatedAlert/AnimatedAlert";
+import { DeleteAccountDialog } from "../../components/DeleteAccountDialog/DeleteAccountDialog";
+import { AddTaskForm } from "../../components/Form/AddTaskForm/AddTaskForm";
+import Spinner from "../../components/Spinner/Spinner";
+import { Tasks } from "../../components/Tasks/Tasks";
+import useHomePageLogic from "../../hooks/useHomePageLogic";
 
 export function HomePage() {
   const {

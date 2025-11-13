@@ -2,9 +2,9 @@ import { Link } from "react-router";
 import "./Reauthenticate.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
-import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
-import Spinner from "../Spinner/Spinner";
-import useReauthenticate from "./hooks/useReauthenticate";
+import useReauthenticate from "../../hooks/useReauthenticate";
+import AnimatedAlert from "../../components/AnimatedAlert/AnimatedAlert";
+import Spinner from "../../components/Spinner/Spinner";
 
 export function Reauthenticate() {
   const {
@@ -84,7 +84,7 @@ export function Reauthenticate() {
           </form>
         )}
 
-        <Link to="/Home page">
+        <Link to="/home">
           <button className="cancel-btn">Cancel</button>
         </Link>
       </div>

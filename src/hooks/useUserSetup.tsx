@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { auth, db } from "../../../config/FirebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
+import { auth, db } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
-import { errorMap } from "../../../utils/Types";
-import useAlert from "../../../hooks/useAlert";
 export default function useUserSetup() {
   const navigate = useNavigate();
   const { message, visible, displayMessage, type } = useAlert();
@@ -32,7 +32,7 @@ export default function useUserSetup() {
   const { mutate } = useMutation({
     mutationFn: setupDoc,
     onSuccess: () => {
-      navigate("/Home page");
+      navigate("/home");
     },
     onError: (error) => {
       if (error instanceof FirebaseError) {

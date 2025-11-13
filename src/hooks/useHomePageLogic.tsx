@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { auth, db } from "../../../../config/FirebaseConfig";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { errorMap, type Task } from "../../../../utils/Types";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
-import useAlert from "../../../../hooks/useAlert";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import {type Task, errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
+import { auth, db } from "../config/FirebaseConfig";
 
 export default function useHomePageLogic() {
   const [isTaskFormVisible, setIsTaskFormVisible] = useState<boolean>(false);

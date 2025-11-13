@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteDoc, doc } from "firebase/firestore";
-import { auth, db } from "../../../../config/FirebaseConfig";
-import { errorMap } from "../../../../utils/Types";
 import { FirebaseError } from "firebase/app";
-import useAlert from "../../../../hooks/useAlert";
+import { auth, db } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
 export default function useDeleteTask() {
   const { message, visible, type, displayMessage } = useAlert();

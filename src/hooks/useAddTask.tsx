@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { collection, doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../../../config/FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { errorMap } from "../../../../utils/Types";
-import useAlert from "../../../../hooks/useAlert";
+import { auth, db } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
 export default function useAddTask(
   setIsTaskFormVisible: React.Dispatch<React.SetStateAction<boolean>>

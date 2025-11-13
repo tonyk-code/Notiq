@@ -7,12 +7,12 @@ import {
   type User,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, googleProvider } from "../../../config/FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { FirebaseError } from "firebase/app";
-import { errorMap } from "../../../utils/Types";
-import useAlert from "../../../hooks/useAlert";
+import { auth, googleProvider } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
 export default function useSignup() {
   const [email, setEmail] = useState<string>("");

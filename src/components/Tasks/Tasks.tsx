@@ -1,7 +1,7 @@
+import useDeleteTask from "../../hooks/useDeleteTask";
+import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
+import Spinner from "../Spinner/Spinner";
 import "../Tasks/Tasks.css";
-import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
-import Spinner from "../../Spinner/Spinner";
-import useDeleteTask from "./hooks/useDeleteTask";
 
 export function Tasks({
   id,

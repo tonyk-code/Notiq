@@ -1,8 +1,8 @@
-import { HeaderBrand } from "../HeaderBrand/HeaderBrand";
 import "./PasswordResetPage.css";
-import AnimatedAlert from "../AnimatedAlert/AnimatedAlert";
-import Spinner from "../Spinner/Spinner";
-import usePasswordReset from "./hooks/usePasswordReset";
+import usePasswordReset from "../../hooks/usePasswordReset";
+import AnimatedAlert from "../../components/AnimatedAlert/AnimatedAlert";
+import { HeaderBrand } from "../../components/HeaderBrand/HeaderBrand";
+import Spinner from "../../components/Spinner/Spinner";
 
 export function PasswordResetPage() {
   const { handleSubmit, email, setEmail, isPending, message, visible, type } =

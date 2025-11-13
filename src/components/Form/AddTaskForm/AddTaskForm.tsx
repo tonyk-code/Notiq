@@ -1,7 +1,7 @@
 import "../AddTaskForm/AddTaskForm.css";
 import AnimatedAlert from "../../AnimatedAlert/AnimatedAlert";
 import Spinner from "../../Spinner/Spinner";
-import useAddTask from "./hooks/useAddTask";
+import useAddTask from "../../../hooks/useAddTask";
 
 export function AddTaskForm({
   isTaskFormVisible,

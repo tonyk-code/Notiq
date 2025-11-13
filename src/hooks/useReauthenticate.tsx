@@ -1,4 +1,3 @@
-import { auth, db, googleProvider } from "../../../config/FirebaseConfig";
 import { useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -10,8 +9,9 @@ import {
 } from "firebase/auth";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
-import useAlert from "../../../hooks/useAlert";
-import { errorMap } from "../../../utils/Types";
+import { auth, db, googleProvider } from "../config/FirebaseConfig";
+import { errorMap } from "../utils/Types";
+import useAlert from "./useAlert";
 
 export default function useReauthenticate() {
   const [providerId, setProviderId] = useState<string | null>(null);
