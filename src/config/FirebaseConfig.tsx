@@ -1,17 +1,17 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth , GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import type { configType } from "../utils/Types";
 
 const firebaseConfig: configType = {
-  apiKey: "AIzaSyCao8qPlypMm4xbIwIUqUJ4DPWSMccShus",
-  authDomain: "notiq-d2aa5.firebaseapp.com",
-  projectId: "notiq-d2aa5",
-  storageBucket: "notiq-d2aa5.firebasestorage.app",
-  messagingSenderId: "687616411185",
-  appId: "1:687616411185:web:ef45bd20f129a6f9193710",
-  measurementId: "G-PB6QLEM6WZ",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

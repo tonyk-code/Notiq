@@ -3,7 +3,6 @@ import { DashboardPage } from "./components/DashboardPage/DashboardPage";
 import { LoginPage } from "./components/LoginPage/LoginPage";
 import { SignupPage } from "./components/SignupPage/SignupPage";
 import { HomePage } from "./components/HomePage/HomePage/HomePage";
-import "./App.css";
 import { SetupPage } from "./components/SetupPage/SetupPage";
 import { PasswordResetPage } from "./components/PasswordResetPage/PasswordResetPage";
 import { onAuthStateChanged, type User } from "firebase/auth";
@@ -11,6 +10,7 @@ import { useEffect, useState, type JSX } from "react";
 import { auth } from "./config/FirebaseConfig";
 import { Reauthenticate } from "./components/Reauthenticate/Reauthenticate";
 import { PageNotFound } from "./components/PageNotFound/PageNotFound";
+import Spinner from "./components/Spinner/Spinner";
 
 const ProtectedRoute = ({
   user,
@@ -37,16 +37,7 @@ function App() {
 
   if (loading) {
     return (
-      <div className="dot-spinner dot-spinner-black">
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-        <div className="dot-spinner__dot"></div>
-      </div>
+      <Spinner color="dot-spinner-black"/>
     );
   }
 
