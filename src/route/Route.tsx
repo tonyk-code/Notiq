@@ -8,13 +8,19 @@ import { PasswordResetPage } from "../pages/PasswordResetPage/PasswordResetPage"
 import { Reauthenticate } from "../pages/ReauthenticatePage/Reauthenticate";
 import { SetupPage } from "../pages/SetupPage/SetupPage";
 import { DashboardPage } from "../pages/DashboardPage/DashboardPage";
+import { HomeLayout } from "../components/Layouts/HomeLayout";
 
 export default function Route() {
   const authenticatedRoutes = [
     {
       path: "/home",
       element: <ProtectedRoute />,
-      children: [{ index: true, element: <HomePage /> }],
+      children: [
+        {
+          element: <HomeLayout />,
+          children: [{ index: true, element: <HomePage /> }],
+        },
+      ],
     },
     {
       path: "/reauthenticate",

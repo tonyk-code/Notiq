@@ -1,4 +1,4 @@
-import "../loadingspinner/LoadingSpinner.css";
+import "../LoadingSpinner/LoadingSpinner.css";
 
 export function LoadingSpinner() {
   return (

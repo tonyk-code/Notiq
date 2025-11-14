@@ -1,154 +1,36 @@
-import { motion } from "framer-motion";
 import "../HomePage/HomePage.css";
 import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimatedAlert from "../../components/AnimatedAlert/AnimatedAlert";
 import { DeleteAccountDialog } from "../../components/DeleteAccountDialog/DeleteAccountDialog";
 import { AddTaskForm } from "../../components/Form/AddTaskForm/AddTaskForm";
-import Spinner from "../../components/Spinner/Spinner";
 import { Tasks } from "../../components/Tasks/Tasks";
 import useHomePageLogic from "../../hooks/useHomePageLogic";
+import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
+import useAlert from "../../hooks/useAlert";
+import { useFilter } from "../../hooks/useFilter";
+import useTask from "../../hooks/useTask";
 
 export function HomePage() {
   const {
     isTaskFormVisible,
     setIsTaskFormVisible,
-    inputVal,
-    setInputVal,
     activeGrid,
     setActiveGrid,
     activeCalander,
     setActiveCalander,
-    userName,
-    accountActions,
-    setAccountActions,
-    photoUrl,
-    message,
-    visible,
-    type,
     deleteConfirmation,
     setDeleteConfirmation,
-    isFetching,
-    isLoading,
-    filtered,
-    signOutMutation,
   } = useHomePageLogic();
+
+  const { message, visible, type } = useAlert();
+  const { filtered, setAccountActions } = useFilter();
+  const { taskData } = useTask()
 
   return (
     <>
       {visible && <AnimatedAlert message={message} type={type} />}
       <div className="Home-page-container">
-        <div className="header">
-          <div className="header-left-container">
-            <div
-              className="header-brand-homePage"
-              onClick={() => window.location.reload()}
-            >
-              <img
-                src="notiq-logo.png"
-                alt="NOTIQ Logo"
-                title="NOTIQ"
-                width={50}
-                height={44}
-              />
-              <span className="brand-name-signup">NOTIQ</span>
-            </div>
-            <div
-              className="header-left"
-              onClick={() => setAccountActions(false)}
-            >
-              <i
-                className="fa-solid fa-magnifying-glass fa-sm"
-                style={{ color: "#a0a0a2" }}
-              ></i>
-              <input
-                type="text"
-                placeholder="Search title..."
-                value={inputVal}
-                onChange={(e) => setInputVal(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div
-            className="header-right-homepage"
-            onClick={() => setAccountActions(!accountActions)}
-          >
-            {photoUrl !== null || photoUrl === "" ? (
-              <img
-                src={photoUrl}
-                alt="Profile"
-                style={{ borderRadius: "50%" }}
-                width={30}
-                height={30}
-              />
-            ) : (
-              <i
-                className="fa-solid fa-circle-user fa-xl"
-                style={{ color: "#107bf7" }}
-              ></i>
-            )}
-            <p className="account-name">{userName}</p>
-          </div>
-          {accountActions && (
-            <motion.div
-              initial={{
-                height: 0,
-                opacity: 0,
-              }}
-              animate={{
-                height: "90px",
-                opacity: 1,
-              }}
-              exit={{
-                height: 0,
-                opacity: 0,
-              }}
-              transition={{
-                duration: 0.2,
-              }}
-              className="account-actions"
-            >
-              <motion.button
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                }}
-                className="signout-button danger-button"
-                onClick={() => {
-                  signOutMutation.mutate();
-                }}
-              >
-                {signOutMutation.isPending ? (
-                  <Spinner color="dot-spinner-black" />
-                ) : (
-                  "Sign out"
-                )}
-              </motion.button>
-              <motion.button
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                }}
-                onClick={() => setDeleteConfirmation(true)}
-                className="delete-account-button danger-button"
-              >
-                Delete account
-              </motion.button>
-            </motion.div>
-          )}
-        </div>
-
         <p
           className="task-manager-text"
           onClick={() => setAccountActions(false)}
@@ -173,9 +55,8 @@ export function HomePage() {
             </button>
 
             <button
-              className={`calender-view-btn ${
-                activeCalander ? "active-btn" : ""
-              }`}
+              className={`calender-view-btn ${activeCalander ? "active-btn" : ""
+                }`}
               onClick={() => {
                 setActiveGrid(false);
                 setActiveCalander(true);
@@ -201,21 +82,8 @@ export function HomePage() {
         </div>
 
         <div className="task-grid" onClick={() => setAccountActions(false)}>
-          {isLoading || isFetching ? (
-            <div className="spinner center">
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-              <div className="spinner-blade"></div>
-            </div>
+          {taskData.isLoading || taskData.isFetching ? (
+            <LoadingSpinner />
           ) : filtered === null ||
             filtered === undefined ||
             filtered.length === 0 ? (
