@@ -1,13 +1,16 @@
-.header-brand-signup {
+.header-brand {
   display: flex;
   align-items: center;
   margin-left: 10px;
+}
+
+.fixed {
   position: fixed;
   top: 0;
   left: 0;
 }
 
-.header-brand-signup span {
+.header-brand span {
   font-size: 1.2rem;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;

@@ -1,0 +1,110 @@
+[33mcommit 77ba17a3b8542e1a8fda96744c7059b80e767f00[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Merge: 2a6c321 5d2eb8b
+Author: Zach <130123502+zekariyasamdu@users.noreply.github.com>
+Date:   Thu Nov 13 13:30:41 2025 -0600
+
+    Merge pull request #1 from tonyk-code/zach/cleanup
+    
+    Zach/cleanup
+
+[33mcommit 5d2eb8b597e53dc458f83c8547aafbd63b9772f3[m[33m ([m[1;31morigin/zach/cleanup[m[33m, [m[1;32mzach/cleanup[m[33m)[m
+Author: zach <zekariyasamdu24@gmail.com>
+Date:   Thu Nov 13 21:16:28 2025 -0600
+
+    fix: homepage
+
+[33mcommit 4e0d53c04c5a21d3801be4594ecf4b9edc74c06f[m
+Author: zach <zekariyasamdu24@gmail.com>
+Date:   Thu Nov 13 14:46:20 2025 -0600
+
+    fix: folder restructure
+
+[33mcommit 40382b593d3a5c49a65cd5a43d893c9cb81d6004[m
+Author: zach <zekariyasamdu24@gmail.com>
+Date:   Thu Nov 13 13:12:31 2025 -0600
+
+    fix: routing
+
+[33mcommit 2a6c321b6636aec9f552a5c05bae3d7d34368d38[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Thu Nov 13 09:18:00 2025 +0300
+
+    created an env file and created a new firebase project
+
+[33mcommit 5aa00b78d70349fb25569fd7c75a26368edb9111[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Tue Nov 11 11:17:36 2025 +0300
+
+    create and use custom hooks for login, tasks, homepage logic , add taskform , tasks , sign up , sign up ,  password reset and reauth pages
+
+[33mcommit 740609107f61a87b729f26c1a5f15cb3ec84bfe2[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Tue Nov 11 09:32:55 2025 +0300
+
+    created a loading spinner compunent and used it and removed some code duplication and fixed formatiing
+
+[33mcommit f05b23664fafde56a7ec14eead9cd1d4b82a4c21[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Mon Nov 10 20:27:43 2025 +0300
+
+    created the animated alert component using it together with my custom useAlert hook to deiplay any messages to the user
+
+[33mcommit 141f2adee02018142c09f0f315d97378c48f0e25[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Sun Nov 9 10:53:27 2025 +0300
+
+    fixed a little bug on reauth page
+
+[33mcommit 3ad0ddf9bbae80d257ce3c2bc82727e9270c808b[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Sat Nov 8 20:34:35 2025 +0300
+
+    created the page not found page
+
+[33mcommit bb60133fd4a1e41719e2691a2a65c22ca6765366[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 14:31:01 2025 +0300
+
+    finished the delete account auth
+
+[33mcommit 952fb848687e5817ce9e1a0a69297e586bbb2106[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 13:55:30 2025 +0300
+
+    created the ui of Reauthenticate page
+
+[33mcommit bcab8e1578cde97291e43ecd5c3c1a2765472af4[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 10:47:34 2025 +0300
+
+    did some changes on the css off deleteAccountDialog
+
+[33mcommit 00122a83531f30ea00ed9354679aa40e4d33337f[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 10:37:45 2025 +0300
+
+    Created the reAuth page for accound deleteion and removed all logic from DeleteAccountDialog page for account deletion
+
+[33mcommit c21c340b5d0a12ebd0c98c790be03663de9e6553[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 10:25:41 2025 +0300
+
+    fixed the password reset link
+
+[33mcommit 008b2f0589add03c8322eecf69ee4cd7f06b7e11[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 10:01:13 2025 +0300
+
+    fixed the photo url
+
+[33mcommit 82160e663849741b0b6e5480fc321b9cdca8e936[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Fri Nov 7 09:58:57 2025 +0300
+
+    Fixed the no task message
+
+[33mcommit ce211f10ae83d8bb5b27de4a61680243d9266152[m
+Author: yesehak kebere <yesehakkebere@gmail.com>
+Date:   Thu Nov 6 19:23:18 2025 +0300
+
+    Initial commit
